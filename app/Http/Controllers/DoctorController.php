@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Doctor;
 use App\Polyclinic;
+use App\DoctorPoli;
 use Auth;
 
 
@@ -14,8 +15,15 @@ class DoctorController extends Controller
     {
     	$doctors = \App\Doctor::all();
     	$polyclinics = \App\Polyclinic::all();
+
+      foreach ($doctors as $key => $value) {
+        $doctorpoli = DoctorPoli::leftJoin('polyclinics', 'polyclinics.id', 'doctor_polis.id_poli')->where('doctor_polis.id_doctor', $value->id)->get();
+        $doctors[$key]->polis = $doctorpoli;
+      }
+
+      // dd($doctors);
 	   	return view('petugas.doctors.view_doctors')->with(compact('doctors'));
-	
+
     }
 
     public function tambahDoctor(Request $request)
@@ -32,8 +40,17 @@ class DoctorController extends Controller
             $doctor->tanggal_lahir = $data['tanggal_lahir'];
             $doctor->status = $data['status'];
             $doctor->save();
+
+
+            foreach ($data['polies'] as $key => $value) {
+              $polinya = new DoctorPoli;
+              $polinya->id_doctor = $doctor->id;
+              $polinya->id_poli = $value;
+              $polinya->save();
+            }
+
             return redirect('/view-doctors')->with('flash_message_succes','Data Dokter Berhasil Ditambahkan!');
-           
+
         }
         $doctors = \App\Doctor::all();
     	$polyclinics = \App\Polyclinic::all();
@@ -41,7 +58,7 @@ class DoctorController extends Controller
 
     }
 
-   
+
 
     public function detailDoctor(Request $request, $id= null)
     {
@@ -51,13 +68,20 @@ class DoctorController extends Controller
             Doctor::where(['id'=>$id])->get();
 
         }
-        
-    	$polyclinics = \App\Polyclinic::all();
-        $detailDoctor = Doctor::where(['id'=>$id])->first();
+
+    	  $polyclinics = \App\Polyclinic::all();
+        $detailDoctor = Doctor::where('doctors.id',$id)->first();
+        $jml_poli = DoctorPoli::where('id_doctor', $detailDoctor->id)->pluck('id_poli');
+        foreach ($jml_poli as $key => $value) {
+            $polinyadia[] = Polyclinic::find($value);
+        }
+        $detailDoctor->polipolinya = $polinyadia;
+        // dd($detailDoctor);
+
         return view('petugas.doctors.detail_doctor')->with(compact('detailDoctor'));
     }
 
-     public function deleteDoctor($id = null) 
+     public function deleteDoctor($id = null)
     {
         //echo $no_rm; die;
         if(!empty($id))
@@ -77,7 +101,7 @@ class DoctorController extends Controller
             Doctor::where(['id'=>$id])->update(['poliklinik_id'=>$data['poliklinik_id'],'nama'=>$data['nama'],'alamat'=>$data['alamat'],'tempat_lahir'=>$data['tempat_lahir'],'tanggal_lahir'=>$data['tanggal_lahir'],'status'=>$data['status']]);
             return redirect('/view-doctors')->with('flash_message_succes','Data Dokter Berhasil di Update!');
         }
-        
+
         $doctors = \App\Doctor::all();
         $polyclinics = \App\Polyclinic::all();
         $doctorDetails = Doctor::where(['id'=>$id])->first();
@@ -85,5 +109,5 @@ class DoctorController extends Controller
         return view('petugas.doctors.edit_doctor')->with(compact('polyclinics','doctorDetails'));
     }
 
-    
+
 }

@@ -31,22 +31,22 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 Route::group(['middleware' => ['auth']],function(){
-	
 
-	//Pasien Route 
+
+	//Pasien Route
 	Route::match(['get','post'],'/petugas/tambah-pasien','PasienController@tambahPasien');
 	Route::get('/view-pasiens','PasienController@viewPasiens');
 	Route::match(['get','post'],'/petugas/detail-pasiens/{id}','PasienController@detailPasiens');
 	Route::match(['get','post'],'/petugas/edit-pasien/{id}','PasienController@editPasien');
 	Route::match(['get','post'],'/petugas/delete-pasien/{id}','PasienController@deletePasien');
 
-	//Polyclinics Route 
+	//Polyclinics Route
 	Route::match(['get','post'],'/tambah-polyclinic','PolyclinicController@tambahPolyclinic');
 	Route::get('/view-polyclinics','PolyclinicController@viewPolyclinics');
 	Route::match(['get','post'],'/edit-polyclinic/{id}','PolyclinicController@editPolyclinic');
 	Route::match(['get','post'],'/delete-polyclinic/{id}','PolyclinicController@deletePolyclinic');
 
-	//doctors Route 
+	//doctors Route
 	Route::get('/view-doctors','DoctorController@viewDoctors');
 	Route::match(['get','post'],'/tambah-doctor','DoctorController@tambahDoctor');
 	Route::match(['get','post'],'/edit-doctor/{id}','DoctorController@editDoctor');
@@ -93,8 +93,7 @@ Route::group(['middleware' => ['auth']],function(){
 	Route::get('/pendaftaran/destroy/{id_booking}','PendaftaranController@destroy');
 
 	//Sedang periksa
-	Route::get('/pemeriksaan/','PendaftaranController@readPemeriksaan');
+	Route::get('/pemeriksaan','PendaftaranController@readPemeriksaan');
 	Route::get('/pendaftaran/done/{id_booking}','PendaftaranController@donePemeriksaan');
 
 });
-
