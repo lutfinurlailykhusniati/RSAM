@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Doctor;
 use App\Polyclinic;
+use App\Jadwals;
 use App\DoctorPoli;
 use Auth;
 
@@ -84,6 +85,11 @@ class DoctorController2 extends Controller
      public function deleteDoctor2($id = null)
     {
         //echo $no_rm; die;
+        // cek jadwal2
+        $dktr = Jadwals::where('dokter_id', $id)->count();
+        if($dktr > 0){
+          return redirect()->back()->with('flash_message_error','Hapus jadwal dokternya dulu!');
+        }
         if(!empty($id))
         {
             Doctor::where(['id'=>$id])->delete();

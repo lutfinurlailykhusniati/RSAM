@@ -16,25 +16,34 @@ class JadwalController2 extends Controller
     public function viewJadwal2()
     {
 
+        // $jadwals = \App\Hari_jadwal::leftJoin('jadwals','jadwals.id','hari_jadwals.id_jadwal')
+        //                             ->leftJoin('doctors','jadwals.dokter_id','doctors.id')
+        //                             ->leftJoin('doctor_polis','doctor_polis.id_doctor','doctors.id')
+        //                             ->leftJoin('polyclinics','doctor_polis.id_poli','polyclinics.id')
+        //                             ->leftJoin('haris', 'haris.id', 'hari_jadwals.id_hari')
+        //                             ->get(['haris.*','hari_jadwals.*', 'jadwals.id', 'jadwals.dokter_id', 'doctors.nama', 'polyclinics.nama_poliklinik']);
+
         $jadwals = \App\Hari_jadwal::leftJoin('jadwals','jadwals.id','hari_jadwals.id_jadwal')
                                     ->leftJoin('doctors','jadwals.dokter_id','doctors.id')
-                                    ->leftJoin('polyclinics','doctors.poliklinik_id','polyclinics.id')
+                                    ->leftJoin('polyclinics','jadwals.poli_id','polyclinics.id')
                                     ->leftJoin('haris', 'haris.id', 'hari_jadwals.id_hari')
                                     ->get(['haris.*','hari_jadwals.*', 'jadwals.id', 'jadwals.dokter_id', 'doctors.nama', 'polyclinics.nama_poliklinik']);
 
         $doctors = \App\Doctor::all();
-        
-        foreach ($doctors as $key => $value) {
-        $doctorpoli = DoctorPoli::leftJoin('polyclinics', 'polyclinics.id', 'doctor_polis.id_poli')->where('doctor_polis.id_doctor', $value->id)->get();
-        $doctors[$key]->polis = $doctorpoli;
 
-      }
+
         // dd($jadwals);
         // $jadwals = \App\Jadwals::all();
         $doctors = \App\Doctor::all();
         $polyclinics = \App\Polyclinic::all();
 
+        // dd($jadwals);
 
+        foreach ($doctors as $key => $value) {
+          $doctorpoli = DoctorPoli::leftJoin('polyclinics', 'polyclinics.id', 'doctor_polis.id_poli')->where('doctor_polis.id_doctor', $value->id)->get();
+          $doctors[$key]->polis = $doctorpoli;
+
+        }
 
         return view('petugas.jadwal2.view_jadwal2')->with(compact('jadwals'));
 

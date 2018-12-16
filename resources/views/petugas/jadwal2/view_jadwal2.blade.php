@@ -14,7 +14,7 @@ use App\Hari_jadwal;
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-body">      
+                <div class="card-body">
                     @if(Session::has('flash_message_error'))
                         <div class="alert-error alert -block">
                             <button type="button" class="close" data-dismiss="alert">x</button>
@@ -35,14 +35,14 @@ use App\Hari_jadwal;
                                 <th>Hari </th>
                                 <th>Waktu</th>
                                 <th>Kuota</th>
-                                <th>Sisa Kuota</th>	
+                                <th>Sisa Kuota</th>
                                 <th>Nama Dokter</th>
-                                <th>Poli</th>                              
+                                <th>Poli</th>
                                 <th>Aksi</th>
                             </tr>
                             </thead>
                             <tbody>
-                                
+
                             	@foreach($jadwals as $jadwal)
                                 <tr>
                                     {{--@php
@@ -59,16 +59,16 @@ use App\Hari_jadwal;
                                     <td>{{ $jadwal->sisa_kuota }}</td>
                                     <td>{{ $jadwal->nama }} </td>
                                     <td>{{ $jadwal->nama_poliklinik }}</td>                               
-                                                                              
-                                    <td class="center">  
+
+                                    <td class="center">
                                         <a href="{{ url('/edit-jadwal2/'.$jadwal->id.'/'.$jadwal->id_hari) }}"  class="btn btn-success btn-sm">Edit</a>
-                                        <a href="{{ url('/delete-jadwal2/'.$jadwal->id.'/'.$jadwal->id_hari) }}" class="btn btn-danger btn-sm">Delete</a>  
-                                    </td> 
+                                        <a href="{{ url('/delete-jadwal2/'.$jadwal->id.'/'.$jadwal->id_hari) }}" class="btn btn-danger btn-sm">Delete</a>
+                                    </td>
                                 </tr>
                               	@endforeach
-                                
+
                                         </tbody>
-                
+
                                     </table>
                                 </div>
 
