@@ -58,7 +58,10 @@ use App\Hari_jadwal;
                                     <td>{{ $jadwal->kuota }}</td>
                                     <td>{{ $jadwal->sisa_kuota }}</td>
                                     <td>{{ $jadwal->nama }} </td>
-                                    <td>{{ $jadwal->nama_poliklinik }}</td>
+                                
+                                    <td>@foreach ($doctor->polis as $key => $value)
+                                      {{ ($value->nama_poliklinik }} <br>
+                                    @endforeach</td>
                                     
 
                                                                               

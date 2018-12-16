@@ -8,33 +8,26 @@
                      <div class="card-body">
                         <h4 class="card-title">Tambah Jadwal 2</h4>
 
-                        
+
                             <div class="form-group row">
-                                    <label class="col-md-3 m-t-15">Nama Dokter 2</label>
+                                    <label class="col-md-3 m-t-15">Nama Dokter</label>
                                     <div class="col-md-9">
                                         <select name="dokter_id" id="dokter_id" class="select2 form-control custom-select" style="width: 100%; height:36px;">
                                             <option>Select</option>
                                         @foreach($doctors as $doctor)
-                                            <option value="{{ $doctor->id }}" > {{ $doctor->nama }}</option>
+                                          @if (count($doctor->polis) > 0)
+                                            <optgroup label="{{ $doctor->nama }}">
+                                              @foreach ($doctor->polis as $key => $value)
+                                                <option value="{{ $doctor->id }}-{{ $value->id }}" > {{ $doctor->nama.' - Poli '.$value->nama_poliklinik }}</option>
+                                              @endforeach
+                                              </optgroup>
+                                          @endif
+
                                         @endforeach
 
                                         </select>
                                     </div>
                             </div>
-
-                            <div class="form-group row">
-                                    <label class="col-md-3 m-t-15">Poliklinik 2</label>
-                                    <div class="col-md-9">
-                                        <select name="dokter_id" id="dokter_id" class="select2 form-control custom-select" style="width: 100%; height:36px;">
-                                            <option>Select</option>
-                                        @foreach($doctors as $doctor)
-                                            <option value="{{ $doctor->id }}" > {{ $doctor->polyclinic->nama_piliklinik }}</option>
-                                        @endforeach
-
-                                        </select>
-                                    </div>
-                            </div>
-
                            <!--  <div class="form-group row">
                                 <label for="fname" class="col-sm-3  control-label col-form-label">Tanggal Jadwal</label>
                                     <div class="col-sm-9">
@@ -70,7 +63,7 @@
                                             <label class="custom-control-label" for="customControlAutosizing6">Sabtu</label>
                                         </div>
                                     </div>
-                                </div>                           
+                                </div>
 
                               <div class="form-group row">
                                 <label for="fname" class="col-sm-3  control-label col-form-label">Jam Mulai</label>
@@ -93,8 +86,8 @@
                                     </div>
                             </div>
                                <div class="form-action">
-                                    <div class="card-body">        
-                                        <button class="btn btn-primary"  name="Submit"  type="Submit">Tambah Jadwal 2</button>
+                                    <div class="card-body">
+                                        <button class="btn btn-primary"  name="Submit"  type="Submit">Tambah Jadwal</button>
                                     </div>
                                 </div>
                             </form>

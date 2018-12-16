@@ -4,7 +4,8 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card">
-                <form class="form-horizontal" method="post" action="{{ url('/tambah-doctor') }}" name="tambah_pasien" id="tambah_pasien"> {{ csrf_field() }}
+                <form class="form-horizontal" method="post" action="{{ url('/tambah-doctor2') }}" name="tambah_pasien" id="tambah_pasien"> {{ csrf_field() }}
+                    <input type="hidden" value="1" name="poliklinik_id"/>
                      <div class="card-body">
                         <h4 class="card-title">Tambah Dokter 2</h4>
                             <div class="form-group row">
@@ -24,12 +25,11 @@
                             <div class="form-group row">
                                     <label class="col-md-3 m-t-15">Pilih Poli</label>
                                     <div class="col-md-9">
-                                        <select name="poliklinik_id" id="poliklinik_id" class="select2 form-control custom-select" style="width: 100%; height:36px;">
                                         @foreach($polyclinics as $polyclinic)
-                                            <option value="{{ $polyclinic->id }}" > {{ $polyclinic->nama_poliklinik }}</option>
+                                          <div class="checkbox">
+                                            <label><input name="polies[]" type="checkbox" value="{{ $polyclinic->id }}"> {{ $polyclinic->nama_poliklinik }}</label>
+                                          </div>
                                         @endforeach
-
-                                        </select>
                                     </div>
                             </div>
 
@@ -58,11 +58,11 @@
                             </div>
 
 
-    
+
                             </div>
                                <div class="form-action">
-                                    <div class="card-body">        
-                                        <button class="btn btn-primary"  name="Submit"  type="Submit">Tambah Dokter</button>
+                                    <div class="card-body">
+                                        <button class="btn btn-primary"  name="Submit"  type="Submit">Tambah Dokter 2</button>
                                     </div>
                                 </div>
                             </form>

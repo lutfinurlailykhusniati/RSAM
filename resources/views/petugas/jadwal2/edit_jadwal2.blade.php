@@ -11,7 +11,7 @@
 
 
                             <div class="form-group row">
-                                <label for="fname" class="col-sm-3  control-label col-form-label">Nama Dokter 2</label>
+                                <label for="fname" class="col-sm-3  control-label col-form-label">Nama Dokter</label>
                                 <div class="col-sm-9">
                                         <input type="text" class="form-control" name="dokter_id" id="dokter_id"  value="{{ $jadwalDetails2->Doctor->nama }}" >
                                 </div>

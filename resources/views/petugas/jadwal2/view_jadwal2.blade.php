@@ -6,7 +6,7 @@ use App\Hari_jadwal;
  <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">Data Jadwal Dokter 2</h4><br><br>
+                        <h4 class="page-title">Data Jadwal Dokter</h4><br><br>
                     </div>
                 </div>
             </div>
@@ -58,9 +58,7 @@ use App\Hari_jadwal;
                                     <td>{{ $jadwal->kuota }}</td>
                                     <td>{{ $jadwal->sisa_kuota }}</td>
                                     <td>{{ $jadwal->nama }} </td>
-                                    <td>{{ $jadwal->nama_poliklinik }}</td>
-                                    
-
+                                    <td>{{ $jadwal->nama_poliklinik }}</td>                               
                                                                               
                                     <td class="center">  
                                         <a href="{{ url('/edit-jadwal2/'.$jadwal->id.'/'.$jadwal->id_hari) }}"  class="btn btn-success btn-sm">Edit</a>
