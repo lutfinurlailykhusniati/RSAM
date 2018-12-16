@@ -35,8 +35,8 @@
                                     <label class="col-md-3"> Poli</label>
                                     <div class="col-md-9">
                                         <div class="custom-control custom-checkbox mr-sm-2">
-                                            <input type="checkbox" class="custom-control-input" id="customControlAutosizing1" name="hari_jadwal[1]" value="Senin">
-                                            <label class="custom-control-label" for="customControlAutosizing1">Senin</label>
+                                            <input type="checkbox" class="custom-control-input" id="customControlAutosizing1" name="polis[]" value=""{{$polis->id}}">">
+                                            <label class="custom-control-label" for="customControlAutosizing1">{{$polis->id_poli}}</label>
                                         </div>
                                         <div class="custom-control custom-checkbox mr-sm-2">
                                             <input type="checkbox" class="custom-control-input" id="customControlAutosizing2" name="hari_jadwal[2]" value="Selasa">

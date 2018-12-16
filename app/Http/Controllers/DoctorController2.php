@@ -106,7 +106,17 @@ class DoctorController2 extends Controller
            // echo "<pre>"; print_r($data); die;
             Doctor::where(['id'=>$id])->update(['poliklinik_id'=>$data['poliklinik_id'],'nama'=>$data['nama'],'alamat'=>$data['alamat'],'tempat_lahir'=>$data['tempat_lahir'],'tanggal_lahir'=>$data['tanggal_lahir'],'status'=>$data['status']]);
             return redirect('/view-doctors2')->with('flash_message_succes','Data Dokter Berhasil di Update!');
+
+            foreach ($data['dokter_polis'] as $key => $value) {
+                $polis = new DoctorPoli;
+                $polis->id_doctor = $polis->id;
+                $polis->id_poli = $key;
+                $polis->save();
+            }
+
         }
+
+
 
         $doctors = \App\Doctor::all();
         $polyclinics = \App\Polyclinic::all();
