@@ -105,15 +105,17 @@ class DoctorController2 extends Controller
             $data = $request->all();
            // echo "<pre>"; print_r($data); die;
             Doctor::where(['id'=>$id])->update(['poliklinik_id'=>$data['poliklinik_id'],'nama'=>$data['nama'],'alamat'=>$data['alamat'],'tempat_lahir'=>$data['tempat_lahir'],'tanggal_lahir'=>$data['tanggal_lahir'],'status'=>$data['status']]);
-            return redirect('/view-doctors2')->with('flash_message_succes','Data Dokter Berhasil di Update!');
 
-            foreach ($data['dokter_polis'] as $key => $value) {
+
+            DoctorPoli::where('id_doctor',$id)->delete();
+            foreach ($data['polis'] as $key => $value) {
                 $polis = new DoctorPoli;
-                $polis->id_doctor = $polis->id;
-                $polis->id_poli = $key;
+                $polis->id_doctor = $id;
+                $polis->id_poli = $value;
                 $polis->save();
             }
 
+            return redirect('/view-doctors2')->with('flash_message_succes','Data Dokter Berhasil di Update!');
         }
 
 
@@ -121,7 +123,9 @@ class DoctorController2 extends Controller
         $doctors = \App\Doctor::all();
         $polyclinics = \App\Polyclinic::all();
         $doctorDetails2 = Doctor::where(['id'=>$id])->first();
-       // echo "<pre>"; print_r($doctorDetails); die;
+        $doctorpoli = DoctorPoli::leftJoin('polyclinics', 'polyclinics.id', 'doctor_polis.id_poli')->where('doctor_polis.id_doctor', $id)->pluck('polyclinics.id')->toArray();
+        $doctorDetails2->polis = $doctorpoli;
+        // dd($doctorDetails2->polis);
         return view('petugas.doctors2.edit_doctor2')->with(compact('polyclinics','doctorDetails2'));
     }
 
